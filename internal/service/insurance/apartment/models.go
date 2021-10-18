@@ -2,19 +2,20 @@ package apartment
 
 import "fmt"
 
-var allEntities = []Apartment{
-	{Title: "one", ApartmentId: 1},
-	{Title: "two", ApartmentId: 2},
-	{Title: "three", ApartmentId: 3},
-	{Title: "four", ApartmentId: 4},
-	{Title: "five", ApartmentId: 5},
+var allEntities = map[uint64]Apartment{
+	0 : {ApartmentId: 0, Object: "Apartment one", Owner: "Owner One"},
+	1 : {ApartmentId: 1, Object: "Apartment two", Owner: "Owner Two"},
+	2 : {ApartmentId: 2, Object: "Apartment three", Owner: "Owner Three"},
+	3 : {ApartmentId: 3, Object: "Apartment four", Owner: "Owner Four"},
+	4 : {ApartmentId: 4, Object: "Apartment five", Owner: "Owner Five"},
 }
 
 type Apartment struct {
 	ApartmentId uint64
-	Title       string
+	Object      string
+	Owner       string
 }
 
-func (a *Apartment) String() string{
-	return fmt.Sprintf("Apartment #%d title: %s", a.ApartmentId, a.Title)
+func (a *Apartment) String() string {
+	return fmt.Sprintf("Apartment #%d title: %s owner: %s", a.ApartmentId, a.Object, a.Owner)
 }

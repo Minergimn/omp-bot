@@ -8,13 +8,13 @@ import (
 )
 
 type ApartmentCommander interface {
-	Help(inputMsg *tgbotapi.Message)
-	Get(inputMsg *tgbotapi.Message)
-	List(inputMsg *tgbotapi.Message)
-	Delete(inputMsg *tgbotapi.Message)
+	Help(inputMessage *tgbotapi.Message)
+	Get(inputMessage *tgbotapi.Message)
+	List(inputMessage *tgbotapi.Message)
+	Delete(inputMessage *tgbotapi.Message)
 
-	New(inputMsg *tgbotapi.Message)    // return error not implemented
-	Edit(inputMsg *tgbotapi.Message)   // return error not implemented
+	New(inputMessage *tgbotapi.Message)    // return error not implemented
+	Edit(inputMessage *tgbotapi.Message)   // return error not implemented
 }
 
 type InsuranceApartmentCommander struct {

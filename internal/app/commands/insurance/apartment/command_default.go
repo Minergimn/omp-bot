@@ -6,10 +6,13 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
-func (c *InsuranceApartmentCommander) Default(inputMsg *tgbotapi.Message) {
-	log.Printf("[%s] %s", inputMsg.From.UserName, inputMsg.Text)
+func (c *InsuranceApartmentCommander) Default(inputMessage *tgbotapi.Message) {
+	log.Printf("[%s] %s", inputMessage.From.UserName, inputMessage.Text)
 
-	msg := tgbotapi.NewMessage(inputMsg.Chat.ID, "You wrote: "+inputMsg.Text)
+	msg := tgbotapi.NewMessage(inputMessage.Chat.ID, "You wrote: "+inputMessage.Text)
 
-	c.bot.Send(msg)
+	_, err := c.bot.Send(msg)
+	if err != nil {
+		log.Printf("InsuranceApartmentCommander.Default: error sending reply message to chat - %v", err)
+	}
 }

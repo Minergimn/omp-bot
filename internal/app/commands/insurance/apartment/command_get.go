@@ -7,18 +7,36 @@ import (
 	"strconv"
 )
 
-func (c *InsuranceApartmentCommander) Get(inputMsg *tgbotapi.Message) {
-	args := inputMsg.CommandArguments()
+func (c *InsuranceApartmentCommander) Get(inputMessage *tgbotapi.Message) {
+	args := inputMessage.CommandArguments()
 
-	id, err := strconv.Atoi(args)
+	idx, err := strconv.ParseUint(args, 10, 64)
 	if err != nil {
-		log.Println("wrong args", args)
+		log.Println("Wrong args", args)
 		return
 	}
 
-	text := fmt.Sprintf("Get %d. You wrote: : %s", id, inputMsg.Text)
-	msg := tgbotapi.NewMessage(inputMsg.Chat.ID, text)
+	apartment, err := c.apartmentService.Describe(idx)
+	if err != nil {
+		log.Printf("Fail to get apartment with idx %d: %v", idx, err)
+		return
+	}
 
-	c.bot.Send(msg)
-	//panic("implement me")
+	var outputMsgText string
+	if apartment == nil {
+		log.Printf("Apartment #%d not found", idx)
+		outputMsgText = fmt.Sprintf("Apartment #%d not found", idx)
+	} else {
+		outputMsgText = apartment.String()
+	}
+
+	msg := tgbotapi.NewMessage(
+		inputMessage.Chat.ID,
+		outputMsgText,
+	)
+
+	_, err = c.bot.Send(msg)
+	if err != nil {
+		log.Printf("InsuranceApartmentCommander.Get: error sending reply message to chat - %v", err)
+	}
 }
