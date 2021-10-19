@@ -1,6 +1,9 @@
 package apartment
 
-import "log"
+import (
+	"log"
+	"sort"
+)
 
 type ApartmentService interface {
 	Describe(apartmentId uint64) (*Apartment, error)
@@ -27,19 +30,28 @@ func (d *InsuranceApartmentService) Describe(apartmentId uint64) (*Apartment, er
 func (d *InsuranceApartmentService) List(cursor uint64, limit uint64) ([]Apartment, error) {
 	result := make([]Apartment, 0)
 
-	if limit != 0 {
-		stopIndex := cursor + limit
+	keys := make([]uint64, 0)
+	for k, _ := range allEntities {
+		keys = append(keys, k)
+	}
+	sort.Slice(keys, func(i, j int) bool { return keys[i] < keys[j] })
 
-		for i := cursor; i < stopIndex; i++ {
-			if value, ok := allEntities[i]; ok {
-				result = append(result, value)
-			} else {
+	if limit != 0 {
+		var count uint64
+		for i, k := range keys {
+			if i < int(cursor){
+				continue
+			}
+			result = append(result, allEntities[k])
+			count++
+
+			if count == limit{
 				break
 			}
 		}
 	} else {
-		for _, a := range allEntities {
-			result = append(result, a)
+		for _, k := range keys {
+			result = append(result, allEntities[k])
 		}
 	}
 

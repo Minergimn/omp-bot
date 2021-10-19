@@ -31,42 +31,4 @@ func (c *InsuranceApartmentCommander) CallbackList(callback *tgbotapi.CallbackQu
 
 	getPage(callback.Message.Chat.ID, apartments, parsedData.Cursor, parsedData.Offset, c.bot)
 	return
-
-	//for _, a := range apartments {
-	//	outputMsgText += a.String()
-	//	outputMsgText += "\n"
-	//}
-	//
-	//msg := tgbotapi.NewMessage(callback.Message.Chat.ID, outputMsgText)
-	//
-	//if parsedData.Offset == 0 {
-	//	_, err = c.bot.Send(msg)
-	//	if err != nil {
-	//		log.Printf("InsuranceApartmentCommander.List: error sending reply message to chat - %v", err)
-	//	}
-	//	return
-	//}
-	//
-	//serializedData, _ := json.Marshal(CallbackListData{
-	//	Offset: parsedData.Offset,
-	//	Cursor: parsedData.Cursor + parsedData.Offset,
-	//})
-	//
-	//callbackPath = path.CallbackPath{
-	//	Domain:       "insurance",
-	//	Subdomain:    "apartment",
-	//	CallbackName: "list",
-	//	CallbackData: string(serializedData),
-	//}
-	//
-	//msg.ReplyMarkup = tgbotapi.NewInlineKeyboardMarkup(
-	//	tgbotapi.NewInlineKeyboardRow(
-	//		tgbotapi.NewInlineKeyboardButtonData("Next page", callbackPath.String()),
-	//	),
-	//)
-	//
-	//_, err = c.bot.Send(msg)
-	//if err != nil {
-	//	log.Printf("InsuranceApartmentCommander.List: error sending reply message to chat - %v", err)
-	//}
 }
