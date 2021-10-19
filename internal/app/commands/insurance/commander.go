@@ -1,10 +1,12 @@
 package insurance
 
 import (
-	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
+	"log"
+
 	"github.com/ozonmp/omp-bot/internal/app/commands/insurance/apartment"
 	"github.com/ozonmp/omp-bot/internal/app/path"
-	"log"
+
+	"github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
 type Commander interface {

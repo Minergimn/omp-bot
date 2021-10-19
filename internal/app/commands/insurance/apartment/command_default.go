@@ -3,7 +3,7 @@ package apartment
 import (
 	"log"
 
-	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
+	"github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
 func (c *InsuranceApartmentCommander) Default(inputMessage *tgbotapi.Message) {

@@ -1,10 +1,12 @@
 package apartment
 
 import (
-	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
+	"log"
+
 	"github.com/ozonmp/omp-bot/internal/app/path"
 	"github.com/ozonmp/omp-bot/internal/service/insurance/apartment"
-	"log"
+
+	"github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
 type ApartmentCommander interface {
@@ -12,9 +14,8 @@ type ApartmentCommander interface {
 	Get(inputMessage *tgbotapi.Message)
 	List(inputMessage *tgbotapi.Message)
 	Delete(inputMessage *tgbotapi.Message)
-
-	New(inputMessage *tgbotapi.Message)    // return error not implemented
-	Edit(inputMessage *tgbotapi.Message)   // return error not implemented
+	New(inputMessage *tgbotapi.Message)
+	Edit(inputMessage *tgbotapi.Message)
 }
 
 type InsuranceApartmentCommander struct {

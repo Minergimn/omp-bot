@@ -1,12 +1,13 @@
 package router
 
 import (
-	"github.com/ozonmp/omp-bot/internal/app/commands/insurance"
 	"log"
 
-	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	"github.com/ozonmp/omp-bot/internal/app/commands/demo"
+	"github.com/ozonmp/omp-bot/internal/app/commands/insurance"
 	"github.com/ozonmp/omp-bot/internal/app/path"
+
+	"github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
 type Commander interface {

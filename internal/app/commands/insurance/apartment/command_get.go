@@ -2,9 +2,10 @@ package apartment
 
 import (
 	"fmt"
-	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	"log"
 	"strconv"
+
+	"github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
 func (c *InsuranceApartmentCommander) Get(inputMessage *tgbotapi.Message) {

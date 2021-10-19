@@ -4,8 +4,9 @@ import (
 	"encoding/json"
 	"log"
 
-	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	"github.com/ozonmp/omp-bot/internal/app/path"
+
+	"github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
 type CallbackListData struct {

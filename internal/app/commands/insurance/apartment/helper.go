@@ -2,10 +2,12 @@ package apartment
 
 import (
 	"encoding/json"
-	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
+	"log"
+
 	"github.com/ozonmp/omp-bot/internal/app/path"
 	"github.com/ozonmp/omp-bot/internal/service/insurance/apartment"
-	"log"
+
+	"github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
 func getPage(chatId int64, apartments []apartment.Apartment, cursor uint64, offset uint64, bot *tgbotapi.BotAPI) {

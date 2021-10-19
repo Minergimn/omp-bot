@@ -3,13 +3,15 @@ package apartment
 import (
 	"encoding/json"
 	"fmt"
-	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
-	service "github.com/ozonmp/omp-bot/internal/service/insurance/apartment"
 	"log"
+
+	serviceApartment "github.com/ozonmp/omp-bot/internal/service/insurance/apartment"
+
+	"github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
 func (c *InsuranceApartmentCommander) New(inputMessage *tgbotapi.Message) {
-	parsedApartment := service.Apartment{}
+	parsedApartment := serviceApartment.Apartment{}
 	args := inputMessage.CommandArguments()
 	err := json.Unmarshal([]byte(args), &parsedApartment)
 	if err != nil {

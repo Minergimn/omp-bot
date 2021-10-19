@@ -3,7 +3,6 @@ package apartment
 import (
 	"errors"
 	"fmt"
-	"log"
 	"sort"
 )
 
@@ -90,8 +89,7 @@ func (d *InsuranceApartmentService) Remove(apartmentId uint64) (bool, error) {
 		delete(allEntities, apartmentId)
 		return ok, nil
 	} else {
-		log.Printf("Apartment %d doesn't exist", apartmentId)
-		return ok, nil
+		return ok, errors.New(fmt.Sprintf("Apartment with id %d doesn't exist", apartmentId))
 	}
 }
 

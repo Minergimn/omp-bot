@@ -1,6 +1,8 @@
 package apartment
 
-import "fmt"
+import (
+	"fmt"
+)
 
 var allEntities = map[uint64]Apartment{
 	1 : {ApartmentId: 1, Object: "Apartment one", Owner: "Owner One"},

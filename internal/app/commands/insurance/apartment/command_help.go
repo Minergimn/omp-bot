@@ -1,7 +1,7 @@
 package apartment
 
 import (
-	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
+	"github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
 func (c *InsuranceApartmentCommander) Help(inputMessage *tgbotapi.Message) {
@@ -9,9 +9,9 @@ func (c *InsuranceApartmentCommander) Help(inputMessage *tgbotapi.Message) {
 		"/help__insurance__apartment - help\n"+
 			"/get__insurance__apartment {id} - get by apartment id\n"+
 			"/list__insurance__apartment - list products\n"+
-			"/list__insurance__apartment {limit} - 💎 list products with pagination\n"+
+			"/list__insurance__apartment {limit} - list products with pagination\n"+
 			"/delete__insurance__apartment {id} - delete by apartment id\n"+
-			"/new__insurance__apartment {json} - 💎 add a new apartment\n"+
+			"/new__insurance__apartment {json} - add a new apartment\n"+
 			"/edit__insurance__apartment {json} - edit apartment (implemented)\n",
 	)
 
