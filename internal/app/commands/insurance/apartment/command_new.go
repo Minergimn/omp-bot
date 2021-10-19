@@ -1,16 +1,39 @@
 package apartment
 
 import (
+	"encoding/json"
+	"fmt"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
+	service "github.com/ozonmp/omp-bot/internal/service/insurance/apartment"
 	"log"
 )
 
 func (c *InsuranceApartmentCommander) New(inputMessage *tgbotapi.Message) {
-	log.Printf("[%s] %s", inputMessage.From.UserName, inputMessage.Text)
+	parsedApartment := service.Apartment{}
+	args := inputMessage.CommandArguments()
+	err := json.Unmarshal([]byte(args), &parsedApartment)
+	if err != nil {
+		log.Printf("InsuranceApartmentCommander.New: "+
+			"error reading json data for type Apartment from "+
+			"input string %v - %v", args, err)
+		return
+	}
 
-	msg := tgbotapi.NewMessage(inputMessage.Chat.ID, "From New. You wrote: "+inputMessage.Text)
+	var outputMsgText string
+	id, err := c.apartmentService.Create(parsedApartment)
+	if err != nil {
+		outputMsgText = fmt.Sprintf("Fail to create apartment %s: %v", parsedApartment.String(), err)
+		log.Print(outputMsgText)
+	} else {
+		outputMsgText = fmt.Sprintf("Apartment was added with id %d", id)
+	}
 
-	_, err := c.bot.Send(msg)
+	msg := tgbotapi.NewMessage(
+		inputMessage.Chat.ID,
+		outputMsgText,
+	)
+
+	_, err = c.bot.Send(msg)
 	if err != nil {
 		log.Printf("InsuranceApartmentCommander.New: error sending reply message to chat - %v", err)
 	}

@@ -11,7 +11,7 @@ func (c *InsuranceApartmentCommander) List(inputMessage *tgbotapi.Message) {
 
 	limit, err := strconv.ParseUint(args, 10, 64)
 	if err != nil {
-		log.Println("Wrong args, set limit as 0", args)
+		log.Println("Wrong args, its' ok, just set limit as 0", args)
 	}
 
 	apartments, err := c.apartmentService.List(0, limit)

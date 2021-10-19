@@ -1,6 +1,8 @@
 package apartment
 
 import (
+	"errors"
+	"fmt"
 	"log"
 	"sort"
 )
@@ -30,22 +32,18 @@ func (d *InsuranceApartmentService) Describe(apartmentId uint64) (*Apartment, er
 func (d *InsuranceApartmentService) List(cursor uint64, limit uint64) ([]Apartment, error) {
 	result := make([]Apartment, 0)
 
-	keys := make([]uint64, 0)
-	for k, _ := range allEntities {
-		keys = append(keys, k)
-	}
-	sort.Slice(keys, func(i, j int) bool { return keys[i] < keys[j] })
+	keys := d.getSortedKeys()
 
 	if limit != 0 {
 		var count uint64
 		for i, k := range keys {
-			if i < int(cursor){
+			if i < int(cursor) {
 				continue
 			}
 			result = append(result, allEntities[k])
 			count++
 
-			if count == limit{
+			if count == limit {
 				break
 			}
 		}
@@ -60,11 +58,31 @@ func (d *InsuranceApartmentService) List(cursor uint64, limit uint64) ([]Apartme
 }
 
 func (d *InsuranceApartmentService) Create(apartment Apartment) (uint64, error) {
-	panic("implement me")
+	id := apartment.ApartmentId
+
+	if id == 0{
+		//create new id, next after biggest
+		keys := d.getSortedKeys()
+		id = keys[len(keys)-1] + 1
+		apartment.ApartmentId = id
+	}
+
+	if _, ok := allEntities[id]; ok{
+		return 0, errors.New(fmt.Sprintf("Apartment with id %d already exists", id))
+	} else {
+		allEntities[id] = apartment
+		return id, nil
+	}
 }
 
 func (d *InsuranceApartmentService) Update(apartmentId uint64, apartment Apartment) error {
-	panic("implement me")
+	id := apartmentId
+	if _, ok := allEntities[id]; ok{
+		allEntities[id] = apartment
+		return nil
+	} else {
+		return errors.New(fmt.Sprintf("Apartment with id %d doesn't exist", id))
+	}
 }
 
 func (d *InsuranceApartmentService) Remove(apartmentId uint64) (bool, error) {
@@ -75,4 +93,13 @@ func (d *InsuranceApartmentService) Remove(apartmentId uint64) (bool, error) {
 		log.Printf("Apartment %d doesn't exist", apartmentId)
 		return ok, nil
 	}
+}
+
+func (d *InsuranceApartmentService) getSortedKeys() []uint64 {
+	keys := make([]uint64, 0)
+	for k, _ := range allEntities {
+		keys = append(keys, k)
+	}
+	sort.Slice(keys, func(i, j int) bool { return keys[i] < keys[j] })
+	return keys
 }

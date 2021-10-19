@@ -24,8 +24,8 @@ func (c *InsuranceApartmentCommander) Get(inputMessage *tgbotapi.Message) {
 
 	var outputMsgText string
 	if apartment == nil {
-		log.Printf("Apartment #%d not found", idx)
 		outputMsgText = fmt.Sprintf("Apartment #%d not found", idx)
+		log.Print(outputMsgText)
 	} else {
 		outputMsgText = apartment.String()
 	}
