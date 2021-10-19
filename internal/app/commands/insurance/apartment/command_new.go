@@ -22,12 +22,16 @@ func (c *InsuranceApartmentCommander) New(inputMessage *tgbotapi.Message) {
 	}
 
 	var outputMsgText string
-	id, err := c.apartmentService.Create(parsedApartment)
-	if err != nil {
-		outputMsgText = fmt.Sprintf("Fail to create apartment %s: %v", parsedApartment.String(), err)
-		log.Print(outputMsgText)
+	if parsedApartment.Owner == "" || parsedApartment.Object == "" {
+		outputMsgText = "The apartment could not be created. Owner and Object are required fields."
 	} else {
-		outputMsgText = fmt.Sprintf("Apartment was added with id %d", id)
+		id, err := c.apartmentService.Create(parsedApartment)
+		if err != nil {
+			outputMsgText = fmt.Sprintf("Fail to create apartment %s: %v", parsedApartment.String(), err)
+			log.Print(outputMsgText)
+		} else {
+			outputMsgText = fmt.Sprintf("Apartment was added with id %d", id)
+		}
 	}
 
 	msg := tgbotapi.NewMessage(

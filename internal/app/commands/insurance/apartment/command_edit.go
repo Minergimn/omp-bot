@@ -22,12 +22,16 @@ func (c *InsuranceApartmentCommander) Edit(inputMessage *tgbotapi.Message) {
 	}
 
 	var outputMsgText string
-	err = c.apartmentService.Update(parsedApartment.ApartmentId, parsedApartment)
-	if err != nil {
-		outputMsgText = fmt.Sprintf("Fail to edit apartment %s: %v", parsedApartment.String(), err)
-		log.Print(outputMsgText)
+	if parsedApartment.Owner == "" || parsedApartment.Object == "" {
+		outputMsgText = "The apartment could not be edited. Owner and Object are required fields."
 	} else {
-		outputMsgText = fmt.Sprintf("Apartment  with id %d was edited", parsedApartment.ApartmentId)
+		err = c.apartmentService.Update(parsedApartment.ApartmentId, parsedApartment)
+		if err != nil {
+			outputMsgText = fmt.Sprintf("Fail to edit apartment %s: %v", parsedApartment.String(), err)
+			log.Print(outputMsgText)
+		} else {
+			outputMsgText = fmt.Sprintf("Apartment  with id %d was edited", parsedApartment.ApartmentId)
+		}
 	}
 
 	msg := tgbotapi.NewMessage(
